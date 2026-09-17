@@ -317,16 +317,27 @@ p{max-width:60ch;text-wrap:pretty}
 .modal__eyebrow{font-size:var(--t-sm);color:var(--muted)}
 .modal__body{padding:var(--s6);display:flex;flex-direction:column;gap:var(--s6);
      max-height:min(60vh, 30rem);overflow-y:auto}
+/* Sottocategorie giustificate: ogni riga si allarga fino a
+   riempire la larghezza, così non resta spazio vuoto a destra.
+   flex-grow:1 distribuisce l'avanzo, flex-shrink:0 impedisce
+   che le etichette lunghe vengano compresse. */
 .modal__items{display:flex;flex-wrap:wrap;gap:var(--s2)}
-.modal__items li{border:var(--bd-h);padding:.4rem .75rem;font-size:var(--t-sm)}
+.modal__items li{flex:1 0 auto;max-width:100%;
+     border:var(--bd-h);padding:.5rem .85rem;font-size:var(--t-sm);
+     text-align:center;line-height:1.3}
 .modal__sub{font-size:var(--t-xs);font-weight:600;color:var(--muted);margin-bottom:var(--s3)}
 /* Marchi: griglia di caselle di dimensione uniforme. Finché il
    file del logo non c'è, la casella mostra il nome; appena il
    file viene caricato in assets/img/marchi/ il nome sparisce e
    compare l'immagine, senza toccare il codice. */
-.modal__brands{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));
-     gap:1px;background:var(--hair);border:1px solid var(--hair)}
-.brand{background:#fff;min-height:66px;display:grid;place-items:center;padding:.5rem}
+/* Stesso principio delle sottocategorie: le caselle crescono
+   per riempire la riga. Prima era una griglia con le linee
+   disegnate dal fondo del contenitore, e nell'ultima riga le
+   celle mancanti restavano grigie. Ora ogni casella porta il
+   proprio bordo, quindi dove non c'è una casella non c'è nulla. */
+.modal__brands{display:flex;flex-wrap:wrap;gap:var(--s2)}
+.brand{flex:1 0 104px;max-width:100%;background:#fff;border:var(--bd-h);
+     min-height:66px;display:grid;place-items:center;padding:.5rem}
 .brand img{max-width:100%;max-height:34px;object-fit:contain}
 .brand span{font-size:var(--t-xs);font-weight:600;line-height:1.15;
      text-align:center;color:var(--muted)}
@@ -561,9 +572,7 @@ p{max-width:60ch;text-wrap:pretty}
 [data-theme="dark"] .modal__x{border-color:rgb(255 255 255 / .4)}
 [data-theme="dark"] .modal__x:hover{background:#fff;color:#1d2a43}
 [data-theme="dark"] .modal__items li{border-color:rgb(255 255 255 / .25)}
-[data-theme="dark"] .modal__brands{background:rgb(255 255 255 / .25);
-  border-color:rgb(255 255 255 / .25)}
-[data-theme="dark"] .brand{background:#fff}
+[data-theme="dark"] .brand{background:#fff;border-color:rgb(255 255 255 / .28)}
 [data-theme="dark"] .brand span{color:#656e7f}
 [data-theme="dark"] .modal__eyebrow,
 [data-theme="dark"] .modal__sub{color:#aab4c6}
