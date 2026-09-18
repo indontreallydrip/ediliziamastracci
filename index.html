@@ -251,6 +251,10 @@ p{max-width:60ch;text-wrap:pretty}
 .cat:hover,.cat:focus-visible,.cat.is-on{background:var(--tint)}
 .cat.is-on .cat__plus{background:var(--navy);color:#fff;transform:rotate(90deg)}
 .cat__img.is-on .shot{opacity:.82}
+/* La didascalia impila nome e descrizione a ogni larghezza.
+   Senza questa regola resta uno <span> inline e su desktop i
+   due testi finiscono affiancati sulla stessa riga. */
+.cat__txt{display:flex;flex-direction:column;gap:var(--s1)}
 .cat__name{font-size:clamp(1.0625rem, 0.85rem + 1vw, 1.75rem);font-weight:600;
      line-height:1.12;letter-spacing:-.014em}
 .cat__what{font-size:var(--t-xs);color:var(--muted);line-height:1.4;max-width:30ch}
@@ -305,7 +309,7 @@ p{max-width:60ch;text-wrap:pretty}
       background-size:28px 28px}
 
 /* ── Finestra reparto ───────────────────────────────────── */
-.modal{width:min(560px, 100%);max-width:none;padding:0;border:var(--bd);background:#fff;
+.modal{width:min(880px, 92vw);max-width:none;padding:0;border:var(--bd);background:#fff;
      color:var(--navy);margin:auto}
 .modal::backdrop{background:rgb(29 42 67 / .55)}
 .modal__h{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s4);
@@ -315,8 +319,8 @@ p{max-width:60ch;text-wrap:pretty}
      transition:background .2s var(--ease),color .2s var(--ease)}
 .modal__x:hover{background:var(--navy);color:#fff}
 .modal__eyebrow{font-size:var(--t-sm);color:var(--muted)}
-.modal__body{padding:var(--s6);display:flex;flex-direction:column;gap:var(--s6);
-     max-height:min(60vh, 30rem);overflow-y:auto}
+.modal__body{padding:var(--s8);display:flex;flex-direction:column;gap:var(--s8);
+     max-height:min(64vh, 34rem);overflow-y:auto}
 /* Sottocategorie giustificate: ogni riga si allarga fino a
    riempire la larghezza, così non resta spazio vuoto a destra.
    flex-grow:1 distribuisce l'avanzo, flex-shrink:0 impedisce
@@ -956,49 +960,52 @@ p{max-width:60ch;text-wrap:pretty}
 var REPARTI = {
   edilizia: {
     nome: "Edilizia",
-    cose: ["Edilizia strutturale","Edilizia di copertura","Finiture","Cartongesso",
-           "Cappotto","Isolanti e impermeabilizzanti","Settore legno","Siderurgia",
-           "Pietre per esterni","Reti, chiodi e derivati","Tubature",
-           "Attrezzature per cantiere"],
+    cose: ["Attrezzature per cantiere","Cappotto","Cartongesso",
+           "Edilizia di copertura","Edilizia strutturale","Finiture",
+           "Isolanti e impermeabilizzanti","Pietre per esterni",
+           "Reti, chiodi e derivati","Settore legno","Siderurgia","Tubature"],
     brands: ["Cottosole","Eclisse","Edilteco","Fassa","FBM","Gridiron","Grigolin","Heidelberg Materials","Imper Italia","Isotecnica","Kerakoll","Laterlite","Mapei","N.D.A.","Nord Resine","Pref.Edi.L.","Saint-Gobain","T2D","Valli Zabban"]
   },
   colore: {
     nome: "Centro colore",
-    cose: ["Servizio tintometrico","Lavabili e traspiranti per interni",
-           "Smalti al solvente e all'acqua",
-           "Pitture al quarzo e acrilsilossaniche per esterno","Decorativi",
+    cose: ["Decorativi",
            "Impregnanti e finiture per legno, all'acqua e a solvente",
-           "Prodotti specifici per muffe e condense"],
+           "Lavabili e traspiranti per interni",
+           "Pitture al quarzo e acrilsilossaniche per esterno",
+           "Prodotti specifici per muffe e condense",
+           "Servizio tintometrico","Smalti al solvente e all'acqua"],
     brands: ["Akzo Nobel","Amonn","San Marco"],
     nota: "Articoli professionali per la verniciatura in campo edile e industriale."
   },
   ceramiche: {
     nome: "Ceramiche e rivestimenti",
-    cose: ["Pavimenti e rivestimenti","Sanitari","Piatti doccia","Box doccia",
-           "Vasche","Mobili bagno","Rubinetteria, profili e accessori"],
+    cose: ["Box doccia","Mobili bagno","Pavimenti e rivestimenti",
+           "Piatti doccia","Rubinetteria, profili e accessori","Sanitari",
+           "Vasche"],
     brands: ["Atlas Concorde","Paffoni","Samo"]
   },
   termoidraulica: {
     nome: "Termoidraulica",
-    cose: ["Tubazioni in acciaio, rame e PE","Sistema multistrato acqua e gas",
-           "Sistemi Geberit","Caldaie","Climatizzatori","Elettropompe e circolatori",
-           "Addolcitori","Serbatoi","Solare termico","Fotovoltaico"],
+    cose: ["Addolcitori","Caldaie","Climatizzatori",
+           "Elettropompe e circolatori","Fotovoltaico","Serbatoi",
+           "Sistema multistrato acqua e gas","Sistemi Geberit",
+           "Solare termico","Tubazioni in acciaio, rame e PE"],
     brands: ["Bongioanni","Climart","DAB","De Pala","Dielle","Elbi","Eurotis","Fimi","Geberit","Global Water Solutions","Irsap","IVR","Multiclima","Olimpia Splendid","Proheat","Rothenberger","Scarabelli","Sylber","Tecnosystemi","Teco","Toshiba"]
   },
   ferramenta: {
     nome: "Ferramenta",
-    cose: ["Elettroutensili e utensili manuali","Bulloneria e viteria",
-           "Fissaggi chimici e siliconici","Taglio e smerigliatura",
-           "Strumenti di misura","Materiale elettrico",
-           "Abbigliamento e antinfortunistica",
-           "Pellet, materiale per combustione e accessori"],
+    cose: ["Abbigliamento e antinfortunistica","Bulloneria e viteria",
+           "Elettroutensili e utensili manuali",
+           "Fissaggi chimici e siliconici","Materiale elettrico",
+           "Pellet, materiale per combustione e accessori",
+           "Strumenti di misura","Taglio e smerigliatura"],
     brands: ["Ausonia","Diadora","Exena","Flex","Milwaukee","Mirka","Omega","Pavan","Prochimica","Sait Abrasivi","Saldogas","U Group"]
   },
   stufe: {
     nome: "Stufe e camini",
-    cose: ["Stufe e termostufe a legna","Stufe e termostufe a pellet",
-           "Stufe e termostufe combinate","Caldaie a biomassa","Camini elettrici",
-           "Forni da giardino"],
+    cose: ["Caldaie a biomassa","Camini elettrici","Forni da giardino",
+           "Stufe e termostufe a legna","Stufe e termostufe a pellet",
+           "Stufe e termostufe combinate"],
     brands: ["Caminetti Montegrappa","Famar","Fontana Forni","Klover","Nobis","Rizzoli","Thermorossi","Vulcano"],
     nota: "Solo prodotti certificati secondo le norme europee sulle emissioni."
   }
